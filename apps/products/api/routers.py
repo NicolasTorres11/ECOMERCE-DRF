@@ -5,9 +5,9 @@ from apps.products.api.views.generic_views import *
 router = DefaultRouter()
 
 router.register(r'products', ProductViewSet, basename='products')
-router.register(r'measure_unit', MeasureListAPIView, basename='measure_unit')
-router.register(r'category_products', CategoryProductListAPIView, basename='category_products')
-router.register(r'indicators', ProductViewSet, basename='indicators')
+router.register(r'measure_unit', MeasureListViewSet, basename='measure_unit')
+router.register(r'category_products', CategoryProductViewSet, basename='category_products')
+router.register(r'indicators', IndicatorViewSet, basename='indicators')
 
 
 urlpatterns = router.urls

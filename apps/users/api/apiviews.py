@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from apps.users.models import User
 from .serializers import UserSerializer, UserListSerializer
 from rest_framework.response import Response
+from rest_framework import viewsets
 
 
 @api_view(['GET', 'POST'])
@@ -73,8 +74,43 @@ def user_detail_view(request, username):
     return Response({'message': 'No se ha encontrado el Usuario'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UsersViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
 
+    def get_queryset(self, pk=None):
+        if pk is None:
+            return self.serializer_class().Meta.model.objects.filter(is_active=True).values('id', 'username',
+                                                                                            'password', 'name', 'email')
+        else:
+            return list(self.serializer_class().Meta.model.objects.filter(is_active=True, id=pk))
 
+    def create(self, request, *args, **kwargs):
+        data = self.serializer_class(data=request.data)
+        if data.is_valid():
+            data.save()
+            return Response({'message': 'Usuario Creado Correctamente'}, status=status.HTTP_201_CREATED)
+        return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None, *args, **kwargs):
+        if self.get_queryset(pk):
+            serializer = self.serializer_class(self.get_queryset(pk), data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None, *args, **kwargs):
+        if pk is not None:
+            try:
+                user = self.get_queryset().filter(id=pk).first()
+            except User.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            user.is_active = False
+            user.save()
+            return Response({
+                'message': 'Usuario Desactivado?'
+            }, status=status.HTTP_202_ACCEPTED)
+        return Response({'message': 'No se ha encontrado el Usuario'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

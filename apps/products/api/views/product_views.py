@@ -51,11 +51,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response({'error': 'No existe este producto'}, status=status.HTTP_404_NOT_FOUND)
 
 
-
-
-
-
-# CLASES Y VISTAS TIPIFICATAS CON CADA UN END POINT
+# CLASES Y VISTAS TIPIFICADAS CON CADA UN END POINT
 
 # class CreateListProductAPIView(generics.ListCreateAPIView):
 #     serializer_class = ProductSerializer
