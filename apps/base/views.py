@@ -12,11 +12,11 @@ class Login(ObtainAuthToken):
         if login_serializer.is_valid():
             user = login_serializer.validated_data['user']
             if user.is_active:
-                user_serializer = UserTokenSerializer
                 token, created = Token.objects.get_or_create(user=user)
+                user_serializer = UserTokenSerializer(user)
                 if created:
                     return Response({
-                        'toke': token.key,
+                        'token': token.key,
                         'user': user_serializer.data,
                         'message': 'Bienvenido'
                     }, status=status.HTTP_201_CREATED)
@@ -26,4 +26,5 @@ class Login(ObtainAuthToken):
         else:
             return Response({'error': 'Nombre de Usuario o Contraseña Inconrrectos'},
                             status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Bienvenido'})
 
