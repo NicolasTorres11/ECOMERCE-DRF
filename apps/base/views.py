@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from apps.users.api.serializers import UserTokenSerializer
+from rest_framework import viewsets
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.decorators import api_view
 
 
 class Login(ObtainAuthToken):
@@ -18,8 +21,16 @@ class Login(ObtainAuthToken):
                     return Response({
                         'token': token.key,
                         'user': user_serializer.data,
-                        'message': 'Bienvenido'
+                        'message': 'Inicio de Sesion Exitoso.',
                     }, status=status.HTTP_201_CREATED)
+                else:
+                    token.delete()
+                    token = Token.objects.create(user=user)
+                    return Response({
+                        'token': token.key,
+                        'user': user_serializer.data,
+                        'message': 'Inicio de Sesion Exitoso.',
+                    })
             else:
                 return Response({'error': 'Usuario sin acceso'},
                                 status=status.HTTP_401_UNAUTHORIZED)
@@ -27,4 +38,3 @@ class Login(ObtainAuthToken):
             return Response({'error': 'Nombre de Usuario o Contraseña Inconrrectos'},
                             status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': 'Bienvenido'})
-

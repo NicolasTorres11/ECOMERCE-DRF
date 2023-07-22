@@ -6,7 +6,6 @@ from drf_yasg import openapi
 from apps.base.views import Login
 
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title='LOQUEMEVAYUDAR',
