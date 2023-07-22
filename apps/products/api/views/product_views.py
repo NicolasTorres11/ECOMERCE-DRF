@@ -3,9 +3,10 @@ from apps.products.api.serializers.product_serializer import ProductSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import viewsets
+from apps.base.authentication.authentication_mixin import Authentication
 
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(Authentication, viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
     # READ IN VIEWSET
