@@ -8,6 +8,20 @@ from datetime import datetime
 from rest_framework.views import APIView
 
 
+class UserToken(APIView):
+    def get(self, request, *args, **kwargs):
+        username = request.GET.get('username')
+        try:
+            user_token = Token.objects.get(user=UserTokenSerializer().Meta.model.objects.filter(username=username).first())
+            return Response({
+                'token': user_token.key
+            }, status=status.HTTP_200_OK)
+        except:
+            return Response({
+                'error': 'Credenciales Incorrectas'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+
 class Login(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         login_serializer = self.serializer_class(data=request.data, context={'request': request}) # EL SERIALIZER TIENE EL PASS Y EL USERNAME
