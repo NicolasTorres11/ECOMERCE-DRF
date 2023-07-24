@@ -33,6 +33,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'simple_history',
     'drf_yasg',
+    'corsheaders',
 ]
 
 
@@ -49,6 +50,7 @@ TWILIO_PHONE_NUMBER = '+13204464923'
 TOKEN_EXPIRED_AFTER_SECONDS = 900
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,6 +59,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'core.urls'

@@ -33,6 +33,7 @@ class User(AbstractUser, PermissionsMixin):
     image = models.ImageField('Imagen de Perfil', upload_to='perfil/', max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=20, unique=True, blank=False, null=True)
     historical = HistoricalRecords()
     objects = UserManager()
 

@@ -20,14 +20,15 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', Login.as_view(), name='Login'),
+    path('login/', Login.as_view(), name='Login'),
     path('verify-code/', AuthenticationCodeView.as_view(), name='verify_code'),
-    path('logout', Logout.as_view(), name='Logout'),
+    path('logout/', Logout.as_view(), name='Logout'),
     path('refresh-token/', UserToken.as_view(), name='Refresh Token'),
-    re_path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('Users/', include('apps.users.api.urls')),
     path('Products/', include('apps.products.api.routers')),
+    re_path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
+

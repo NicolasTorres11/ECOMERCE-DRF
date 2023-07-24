@@ -4,9 +4,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from apps.products.models import *
+from apps.base.authentication.authentication_mixin import Authentication
 
 
-class MeasureListViewSet(viewsets.ReadOnlyModelViewSet):
+class MeasureListViewSet(Authentication, viewsets.ReadOnlyModelViewSet):
     """
     hi from measure unit
 

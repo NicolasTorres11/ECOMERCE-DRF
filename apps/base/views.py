@@ -55,7 +55,7 @@ class Login(ObtainAuthToken):
             user = login_serializer.validated_data['user']
             if user.is_active:
                 verification_code = self.generate_verification_code(user)
-                phone_number = '+573053218312'
+                phone_number = user.phone_number
                 self.send_verification_code(phone_number, verification_code)
                 return Response({
                     'message': 'Código de verificación enviado al usuario. Por favor, '
