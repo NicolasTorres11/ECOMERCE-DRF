@@ -1,4 +1,6 @@
 from django.db import models
+import random
+from apps.users.models import User
 
 
 class BaseModel(models.Model):
@@ -12,3 +14,12 @@ class BaseModel(models.Model):
         abstract = True
         verbose_name = 'Modelo Base'
         verbose_name_plural = 'Modelos Bases'
+
+
+class Code(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6)  # Código de 6 dígitos
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Code: {self.code} - User: {self.user}"

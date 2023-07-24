@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure--3x3u7w1$fk8f_*g0m6danm(cjomt_#c)ztn0j7cyn+i4@@bfh'
@@ -40,6 +41,10 @@ INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_PARTY_APPS
 SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none'
 }
+
+TWILIO_ACCOUNT_SID = 'AC8d3d32b648a0ff044a1b594dbc2f76c9'
+TWILIO_AUTH_TOKEN = '6a36954c653b00544240a61205d1214c'
+TWILIO_PHONE_NUMBER = '+13204464923'
 
 TOKEN_EXPIRED_AFTER_SECONDS = 900
 
